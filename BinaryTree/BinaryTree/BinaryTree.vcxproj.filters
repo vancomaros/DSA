@@ -30,6 +30,9 @@
     <ClCompile Include="MyHash.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="bvl.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Header.h">

@@ -33,7 +33,6 @@ void find_hash(int *arr, int value) {
 	while (1) {
 		if (index < size_of_array && value == *(arr + index)) {
 			printf("Je na indexe %d mojho hashu\n", index);
-			printf("%d", *(arr + index));
 			return;
 		}
 		else if (index > size_of_array || *(arr + index) == -1) {

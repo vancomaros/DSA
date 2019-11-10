@@ -1,2 +1,5 @@
-﻿  NotMineTree.c
+﻿  Source.c
+c:\users\maroš\source\repos\binarytree\binarytree\source.c(7): warning C4068: unknown pragma
+c:\users\maroš\source\repos\binarytree\binarytree\source.c(43): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\maroš\source\repos\binarytree\binarytree\source.c(34): warning C4047: 'initializing': 'char' differs in levels of indirection from 'char [1]'
   BinaryTree.vcxproj -> C:\Users\Maroš\source\repos\BinaryTree\Debug\BinaryTree.exe

@@ -31,3 +31,7 @@ void RightRotate(struct Node** T, struct Node** x);
 void LeftRotate(struct Node** T, struct Node** x);
 int	search_RBT(struct Node* root, int x);
 //------------------------------------------------
+//--------------------BVL-------------------------
+struct ITEM *add_tree_bvl(int value);
+struct ITEM *insert_tree_bvl(struct ITEM *component, int new_value);
+int search_tree_bvl(struct ITEM *component, int new_value);

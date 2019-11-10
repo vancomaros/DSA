@@ -116,6 +116,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="bvl.c" />
     <ClCompile Include="MyHash.c" />
     <ClCompile Include="MyTree.c" />
     <ClCompile Include="NotMineHash.c" />

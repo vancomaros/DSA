@@ -139,12 +139,12 @@ struct LEAF *insert_tree(LEAF *component, int new_value) {
 void search_tree(LEAF *component, int new_value) {
 
 	if (component == NULL) {
-		printf("Prvok %d v mojom strome nebol najdeny\n", new_value);
+		printf("Prvok %d v mojom strome nebol najdeny.\n", new_value);
 		return;
 	}
 
 	if (component->value == new_value) {
-		printf("Prvok %d najdeny v mojom strome\n", new_value);
+		printf("Prvok %d najdeny v mojom strome v hlbke %d.\n", new_value, component->value);
 		return;
 	}
 

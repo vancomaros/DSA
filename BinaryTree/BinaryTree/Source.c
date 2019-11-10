@@ -9,10 +9,11 @@
 int size_of_array = 10;
 double lambda = 0;
 int elements = 0;
-int SUM = 100;
+int SUM = 10000000;
 
 struct Node* RBT = NULL;
 struct LEAF *root = NULL;
+struct ITEM *root_bvl = NULL;
 //-------------------------------------------------------------------
 //-------------------------------------------------------------------
 
@@ -40,21 +41,21 @@ int main() {
 			case 'v':
 
 				srand(time(0));
-				clock_t t, t1, t2, t3;
+				clock_t t, t1, t2, t3, t4;
 				t = clock();
 				array_hash = insert_hash(array_hash);
 				t = clock() - t;
 				double time_taken = ((double)t) / CLOCKS_PER_SEC;
 				printf("\n Cas vkladania %d prvkov do mojej HASH tabulky: %.3f\n", SUM, time_taken);
+
 				/*
 				for (int i = 0; i < size_of_array; i++)
 					printf("|%d| ", *(array_hash + i));
 				*/
 
-
 				t1 = clock();
 				for (int i = 1; i < SUM + 1; i++) {
-					num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (100 + 1 - 0) + 1);
+					num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
 					//num = i;
 					root = insert_tree(root, num);
 				}
@@ -74,6 +75,17 @@ int main() {
 				t3 = clock() - t3;
 				double time_taken3 = ((double)t3) / CLOCKS_PER_SEC;
 				printf("\n Cas vkladania %d prvkov do cudzieho vyvazovacieho stromu: %.3f\n", SUM, time_taken3);
+				//preorder(RBT);
+
+				t4 = clock();
+				for (int i = 1; i < SUM + 1; i++) {
+					num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
+					//num = i;
+					root_bvl = insert_tree_bvl(root_bvl, num);
+				}
+				t4 = clock() - t4;
+				double time_taken4 = ((double)t4) / CLOCKS_PER_SEC;
+				printf("\n Cas vkladania %d prvkov do mojho nevyvazovacieho stromu: %.3f\n", SUM, time_taken4);
 				break;
 
 			case 'k':
@@ -93,6 +105,10 @@ int main() {
 				if (search_RBT(RBT, num) == 1)
 					printf("V cudzom strome sa %d nachadza.\n", num);
 				else printf("V cudzom strome sa %d nenachadza.\n", num);
+
+				if (search_tree_bvl(root_bvl, num) == 1)
+					printf("V mojom nevyvazenom strome sa %d nachadza.\n", num);
+				else printf("V mojom nevyvazenom strome sa %d nenachadza.\n", num);
 				break;
 
 			default: 

@@ -211,12 +211,10 @@ struct Node* NotMyTree(struct Node* RBT)
 	int num;
 
 	for (int i = 0; i < SUM; i++) {
-		num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (100 + 1 - 0) + 1);
+		num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
 		if (BST_search(RBT, num) != NULL)
 			continue;
 		RBT = RB_insert(RBT, num);
 	}
-	preorder(RBT);
 	return RBT;
-
 }
