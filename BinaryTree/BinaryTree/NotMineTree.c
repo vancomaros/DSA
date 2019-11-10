@@ -206,12 +206,13 @@ struct Node* BST_search(struct Node* root, int x)
 		return BST_search(root->right, x);
 }
 
-struct Node* NotMyTree(struct Node* RBT)
+struct Node* NotMyTree(struct Node* RBT, int *arr)
 {
 	int num;
 
 	for (int i = 0; i < SUM; i++) {
-		num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
+		//num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
+		num = *(arr + i);
 		if (BST_search(RBT, num) != NULL)
 			continue;
 		RBT = RB_insert(RBT, num);

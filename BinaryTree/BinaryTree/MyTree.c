@@ -11,9 +11,16 @@ typedef struct leaf {
 	struct leaf *right;
 	int height;
 } LEAF;
-
-void preOrder(LEAF *node)
-{
+/*
+void delete_tree(LEAF* node) {
+	if (node != NULL) {
+		delete_tree(node->left);
+		delete_tree(node->right);
+		node == NULL;
+	}
+}
+*/
+void preOrder(LEAF *node) {
 	if (node != NULL) {
 		printf("%d ", node->value);
 		preOrder(node->left);
@@ -139,12 +146,12 @@ struct LEAF *insert_tree(LEAF *component, int new_value) {
 void search_tree(LEAF *component, int new_value) {
 
 	if (component == NULL) {
-		printf("Prvok %d v mojom strome nebol najdeny.\n", new_value);
+//		printf("Prvok %d v mojom strome nebol najdeny.\n", new_value);
 		return;
 	}
 
 	if (component->value == new_value) {
-		printf("Prvok %d najdeny v mojom strome v hlbke %d.\n", new_value, component->value);
+//		printf("Prvok %d najdeny v mojom strome v hlbke %d.\n", new_value, component->height);
 		return;
 	}
 

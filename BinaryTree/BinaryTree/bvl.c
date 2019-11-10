@@ -38,21 +38,21 @@ struct ITEM *insert_tree_bvl(ITEM *component, int new_value) {
 	return component;
 }
 
-int search_tree_bvl(ITEM *component, int new_value) {
+void search_tree_bvl(ITEM *component, int new_value) {
 
 	if (component == NULL) {
-		printf("Prvok %d nebol najdeny.\n", new_value);
-		return 1;
+//		printf("V mojom nevyvazenom strome sa %d nenachadza.\n", new_value);
+		return;
 	}
 
 	if (component->value == new_value) {
-		printf("Prvok %d najdeny.\n", new_value);
-		return 0;
+//		printf("V mojom nevyvazenom strome sa %d nachadza.\n", new_value);
+		return;
 	}
 
 	if (new_value < component->value)
-		search_tree(component->left, new_value);
+		search_tree_bvl(component->left, new_value);
 
 	else if (new_value > component->value)
-		search_tree(component->right, new_value);
+		search_tree_bvl(component->right, new_value);
 }

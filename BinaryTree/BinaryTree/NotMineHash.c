@@ -9,31 +9,36 @@ typedef struct node {
 	struct node* next;
 } node;
 
-#define HASH_MAX 10000000
+#define HASH_MAX 100000000
 node* hashtable[HASH_MAX];
 
 unsigned int hash(int sum);
 void create(int a);
 int find(int a);
 
-int NotMyHash() {
+int NotMyHash(int *arr) {
 	srand(time(0));
 	int num;
 	// set pointers to NULL!
 	for (int i = 0; i < HASH_MAX; i++)
 	{
-		hashtable[i] = NULL;
+		hashtable[0] = NULL;
 	}
 
 	for (int i = 0; i < SUM; i++) {
-		num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
+		//num = (rand() % (1000 + 1 - 0) + 1) * (rand() % (1000 + 1 - 0) + 1);
+		num = *(arr + i);
 		//num = i;
 		create(num);
 	}
-	/*for (int i = 0; i < HASH_MAX; i++)
-		if (hashtable[i] != NULL)
-			printf("|%d| ", hashtable[i]->name);*/
+
 	return 0;
+}
+
+void read() {
+	for (int i = 0; i < HASH_MAX; i++)
+	if (hashtable[i] != NULL)
+		printf("|%d| ", hashtable[i]->name);
 }
 
 unsigned int hash(int sum)

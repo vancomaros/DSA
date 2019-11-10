@@ -32,11 +32,11 @@ void find_hash(int *arr, int value) {
 	index = value % size_of_array;
 	while (1) {
 		if (index < size_of_array && value == *(arr + index)) {
-			printf("Je na indexe %d mojho hashu\n", index);
+//			printf("Je na indexe %d mojho hashu\n", index);
 			return;
 		}
 		else if (index > size_of_array || *(arr + index) == -1) {
-			printf("%d v mojom hashi nie je.\n", value);
+//			printf("%d v mojom hashi nie je.\n", value);
 			return;
 		}
 		index += 2 ^ ++temp - 1;
@@ -53,7 +53,21 @@ int check_hash(int *arr, int value) {
 		else if (index > size_of_array || *(arr + index) == -1) {
 			return 0;
 		}
-		index += 2 ^ ++temp - 1;
+		else index += 2 ^ ++temp - 1;
+	}
+}
+
+int *insert_my_hash(int *arr, int num) {
+	while (1) {
+		if (check_hash(arr, num) == 1) {
+		printf("Cislo sa uz v mojom hashi nachadza.\n");
+		return;
+		}
+		if (lambda >= 0.5)
+			arr = resize_hash(arr);
+		while (my_hash(arr, num) == 1)
+			arr = resize_hash(arr);
+		return arr;
 	}
 }
 
@@ -62,7 +76,8 @@ int *insert_hash(int *arr) {
 	int value;
 
 	while (num--) {
-		value = (rand() % (100000 + 1 - 0) + 1) * (rand() % (100000 + 1 - 0) + 1);
+		value = (rand() % (1000 + 1 - 0) + 1) * (rand() % (10000 + 1 - 0) + 1);
+		//value = *(pom + num + 1);
 		if (check_hash(arr, num) == 1)
 			continue;
 		if (lambda >= 0.5)

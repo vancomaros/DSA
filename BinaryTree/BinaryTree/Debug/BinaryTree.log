@@ -1,5 +1,16 @@
-﻿  Source.c
+﻿  MyHash.c
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(64): warning C4033: 'insert_my_hash' must return a value
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(67): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(69): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(84): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(86): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(105): warning C4047: 'return': 'int' differs in levels of indirection from 'int *'
+  Source.c
 c:\users\maroš\source\repos\binarytree\binarytree\source.c(7): warning C4068: unknown pragma
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(43): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(34): warning C4047: 'initializing': 'char' differs in levels of indirection from 'char [1]'
+c:\users\maroš\source\repos\binarytree\binarytree\source.c(48): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\maroš\source\repos\binarytree\binarytree\source.c(76): warning C4020: 'NotMyTree': too many actual parameters
+c:\users\maroš\source\repos\binarytree\binarytree\source.c(39): warning C4047: 'initializing': 'char' differs in levels of indirection from 'char [1]'
+  Generating Code...
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(72): warning C4715: 'insert_my_hash': not all control paths return a value
+c:\users\maroš\source\repos\binarytree\binarytree\myhash.c(27): warning C4715: 'my_hash': not all control paths return a value
   BinaryTree.vcxproj -> C:\Users\Maroš\source\repos\BinaryTree\Debug\BinaryTree.exe
