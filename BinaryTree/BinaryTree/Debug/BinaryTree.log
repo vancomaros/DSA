@@ -1,11 +1,2 @@
-﻿  Source.c
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(6): warning C4068: unknown pragma
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(227): warning C4013: 'resize_hash' undefined; assuming extern returning int
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(227): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(254): warning C4047: 'return': 'int' differs in levels of indirection from 'int *'
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(264): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(266): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(306): warning C4244: 'function': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(298): warning C4047: 'initializing': 'char' differs in levels of indirection from 'char [1]'
-c:\users\maroš\source\repos\binarytree\binarytree\source.c(238): warning C4715: 'hash': not all control paths return a value
+﻿  NotMineTree.c
   BinaryTree.vcxproj -> C:\Users\Maroš\source\repos\BinaryTree\Debug\BinaryTree.exe
