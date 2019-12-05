@@ -1,0 +1,5 @@
+﻿  Popolvar.c
+c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(87): warning C4047: 'initializing': 'char **' differs in levels of indirection from 'char *'
+c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(81): warning C4716: 'zachran_princezne': must return a value
+c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(32): warning C4716: 'printSolution': must return a value
+  Popolvar.vcxproj -> C:\Users\Maroš\source\repos\Popolvar\Debug\Popolvar.exe
