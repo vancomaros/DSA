@@ -1,5 +1,5 @@
 ﻿  Popolvar.c
-c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(87): warning C4047: 'initializing': 'char **' differs in levels of indirection from 'char *'
-c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(81): warning C4716: 'zachran_princezne': must return a value
-c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(32): warning C4716: 'printSolution': must return a value
+c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(331): warning C4133: '=': incompatible types - from 'int ***' to 'Node ***'
+c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(347): warning C4047: '=': 'int *' differs in levels of indirection from 'int'
+c:\users\maroš\source\repos\popolvar\popolvar\popolvar.c(350): warning C4477: 'printf' : format string '%d' requires an argument of type 'int', but variadic argument 1 has type 'int *'
   Popolvar.vcxproj -> C:\Users\Maroš\source\repos\Popolvar\Debug\Popolvar.exe
