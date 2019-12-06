@@ -114,6 +114,7 @@ struct Node delete_heap() {
 	heap[heap_count].price = 0;
 	heap[heap_count].type = ' ';
 	heapify_top_bottom(0);
+	//printf("Vybral som z heapu: %d %d %d\n", del.x, del.y, del.z);
 	return del;
 }
 
@@ -155,21 +156,22 @@ void make_block(char **original, struct Node ***map, struct Node top_heap, int x
 	map[x][y][z].y = y;
 	map[x][y][z].z = z;
 	map[x][y][z].type = original[x][y];
-	if (top_heap.type == 'H')
+//	if (top_heap.type == 'H')
+	if (original[x][y] == 'H')
 		map[x][y][z].price = top_heap.price + 2;
 	else map[x][y][z].price = top_heap.price + 1;
 	map[x][y][z].prev_x = top_heap.x;
 	map[x][y][z].prev_y = top_heap.y;
 	map[x][y][z].prev_z = top_heap.z;
-
+	printf("");
 }
 
 void teleport(char **original, struct Node ***map, struct Node top_heap, int max_x, int max_y) {
 	short num = 0, index = 0, x, y, z;
-	z = top_heap.z;
 
 	num = top_heap.type - '0';
 		while (ports[num][index] != -1) {
+			z = top_heap.z;
 			x = ports[num][index];
 			y = ports[num][index+1];
 			if (y - 1 >= 0 && original[x][y - 1] != 'N') {
@@ -201,18 +203,35 @@ void teleport(char **original, struct Node ***map, struct Node top_heap, int max
 			}
 			index += 2;
 		}
+		//print_heap();
 }
 
 
-int where_am_i(struct Node top_heap) {
+struct Node where_am_i(struct Node top_heap, struct Node ***map) {
 
 	if (top_heap.type == 'D') {
 		top_heap.z += 1;
-		return 0;
+		map[top_heap.x][top_heap.y][top_heap.z].prev_x = top_heap.x;
+		map[top_heap.x][top_heap.y][top_heap.z].prev_y = top_heap.y;
+		map[top_heap.x][top_heap.y][top_heap.z].prev_z = top_heap.z - 1;
+		map[top_heap.x][top_heap.y][top_heap.z].price = top_heap.price;
+		map[top_heap.x][top_heap.y][top_heap.z].x = top_heap.x;
+		map[top_heap.x][top_heap.y][top_heap.z].y = top_heap.y;
+		map[top_heap.x][top_heap.y][top_heap.z].z = top_heap.z;
+		map[top_heap.x][top_heap.y][top_heap.z].type = top_heap.type;
+		return top_heap;
 	}
 	if (top_heap.type == 'G') {
 		top_heap.z += 2;
-		return 0;
+		map[top_heap.x][top_heap.y][top_heap.z].prev_x = top_heap.x;
+		map[top_heap.x][top_heap.y][top_heap.z].prev_y = top_heap.y;
+		map[top_heap.x][top_heap.y][top_heap.z].prev_z = top_heap.z - 2;
+		map[top_heap.x][top_heap.y][top_heap.z].price = top_heap.price;
+		map[top_heap.x][top_heap.y][top_heap.z].x = top_heap.x;
+		map[top_heap.x][top_heap.y][top_heap.z].y = top_heap.y;
+		map[top_heap.x][top_heap.y][top_heap.z].z = top_heap.z;
+		map[top_heap.x][top_heap.y][top_heap.z].type = top_heap.type;
+		return top_heap;
 	}
 	if (top_heap.type == 'P' && top_heap.z % 2) {
 		top_heap.z += 4;
@@ -221,13 +240,9 @@ int where_am_i(struct Node top_heap) {
 		if (top_heap.z < 8)
 			top_heap.z += 8;
 		if (top_heap.z >= 13)
-			return 1;
+			return top_heap;
 	}
-	if (top_heap.type >= '0' && top_heap.type <= '9') {
-		if (top_heap.z >= 2)
-			return 2;
-	}
-	return 0;
+	return top_heap;
 }
 
 
@@ -239,19 +254,22 @@ int dijkstra(char **original, struct Node ***map, int m, int n, int princess) {
 
 	while (!0) {
 		top_heap = delete_heap();
+
+
+		insert_to_map(top_heap, map);
+		top_heap = where_am_i(top_heap, map);
+		if (top_heap.type >= '0' && top_heap.type <= '9')
+			if (top_heap.z >= 2)
+				teleport(original, map, top_heap, m, n);
+		
 		short x = top_heap.x;
 		short y = top_heap.y;
 		short z = top_heap.z;
 
-		insert_to_map(top_heap, map);
-		if (where_am_i(top_heap) == 1);
-
-		if (where_am_i(top_heap) == 2)
-			teleport(original, map, top_heap, m, n);
-
-// tu to vypni ked chces koniec ty kokot
+// tu to vypni ked chces koniec
 		if (top_heap.type == 'D') {
-			top_heap.z += 1;
+			top_heap.z += 1; 
+			//print_heap();
 			cesta(top_heap, map);
 			return top_heap.price;
 		}
@@ -304,6 +322,7 @@ int find_teleports(char **mapa, int n, int m) {
 				*(*(ports + num) + index+1) = j;
 			}
 		}
+		index = 0;
 	}
 	return princess;
 }
@@ -324,8 +343,8 @@ void zachran_princezne(char **mapa, int n, int m, int t, int *dlzka_cesty) {
 			printf("%d ", *(*(ports + i) + j));
 		}
 		printf("\n");
-	}*/
-
+	}
+	*/
 
 	struct Node ***arr;
 	arr = alloc_data(m, n, 16);
@@ -357,10 +376,10 @@ int main() {
 					   {'H','G','C','H','0'},
 					   {'H','C','C','N','C'},
 					   {'N','C','N','N','C'},
-					   {'H','P','H','H','C'},
-					   {'C','N','P','0','N'},
+					   {'H','P','8','H','C'},
+					   {'C','N','4','0','N'},
 					   {'H','0','H','N','C'},
-					   {'C','N','C','8','C'},
+					   {'C','N','C','C','C'},
 					   {'H','C','H','P','C'},
 					   {'4','H','C','4','D'} };
 
@@ -384,3 +403,7 @@ int main() {
 	return 0;
 }
 
+/*
+trik: v portoch volam obzcajny insert do heapu a pridavam cenu.
+make blok - nespravna cena
+*/
