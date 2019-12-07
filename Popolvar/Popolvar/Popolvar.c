@@ -3,6 +3,7 @@
 #include <math.h>
 #include <limits.h>
 #include <string.h>
+#include <time.h>
 
 #define OBJECTIONABLE -1
 
@@ -14,9 +15,9 @@ struct Node {
 };
 
 
-struct Node heap[25000];
+struct Node heap[2500];
 int heap_count = 0;
-short ports[10][300];
+short ports[10][200];
 
 // vypise heap
 void print_heap() {
@@ -104,7 +105,9 @@ void insert_heap(struct Node block) {
 }
 
 struct Node delete_heap() {
-
+	if (heap[0].type == ' ') 
+		printf("Prazdny heap-nie je riesenie\n");
+	
 	struct Node del = heap[0];
 	heap[0] = heap[--heap_count];
 	heap[heap_count].y = 0;
@@ -121,20 +124,31 @@ struct Node delete_heap() {
 
 void cesta(struct Node curr, struct Node ***map) {
 	int arr[50000];
-	int counter = 0;
+	int counter = 0, temp = 0;
 	int length = curr.price;
+
 	while (curr.x != 0 || curr.y != 0) {
+		
 		arr[counter] = curr.y;
 		counter++;
 		arr[counter] = curr.x;
 		counter++;
+
 		curr = map[curr.prev_x][curr.prev_y][curr.prev_z];
 	}
+
+	int path[50000];
+	path[0] = 0;
+	path[1] = 0;
+
+	
 	printf("\n\n0 0\n");
-		for (int i = counter/2 - 1; i >= 0; i--) {
+	for (int i = counter/2 - 1; i >= 0; i--) {
+		//if (i > 4 && (arr[counter-1] != arr[counter-3] || arr[counter-2] != arr[counter-4])) {
 			printf("%d ", arr[--counter]);
 			printf("%d\n", arr[--counter]);
-		}
+	//	}
+	}
 }
 
 
@@ -149,7 +163,7 @@ void insert_to_map(struct Node place, struct Node ***map) {
 		map[x][y][z] = place;
 }
 
-
+// Vyvori sa novy blok, urcia sa mu parametre a nasledne sa v dalsej funkcii hodi do heapu
 void make_block(char **original, struct Node ***map, struct Node top_heap, int x, int y, int z) {
 
 	map[x][y][z].x = x;
@@ -166,6 +180,8 @@ void make_block(char **original, struct Node ***map, struct Node top_heap, int x
 	printf("");
 }
 
+
+// Fukncia posle do heapu vsetkych susedov teleportov s rovnakym cislom, ktori splnaju podmienky na vlozenie do heapu
 void teleport(char **original, struct Node ***map, struct Node top_heap, int max_x, int max_y) {
 	short num = 0, index = 0, x, y, z;
 
@@ -203,44 +219,55 @@ void teleport(char **original, struct Node ***map, struct Node top_heap, int max
 			}
 			index += 2;
 		}
-		//print_heap();
 }
 
 
+// ak sa nasiel drak, generator alebo princezna, zmeni sa dimenzia, zvacsi sa o 'i'
+struct Node change_dimension(struct Node ***map, struct Node top_heap, short i) {
+	top_heap.z += i;
+	map[top_heap.x][top_heap.y][top_heap.z].prev_x = top_heap.x;
+	map[top_heap.x][top_heap.y][top_heap.z].prev_y = top_heap.y;
+	map[top_heap.x][top_heap.y][top_heap.z].prev_z = top_heap.z - i;
+	map[top_heap.x][top_heap.y][top_heap.z].price = top_heap.price;
+	map[top_heap.x][top_heap.y][top_heap.z].x = top_heap.x;
+	map[top_heap.x][top_heap.y][top_heap.z].y = top_heap.y;
+	map[top_heap.x][top_heap.y][top_heap.z].z = top_heap.z;
+	map[top_heap.x][top_heap.y][top_heap.z].type = top_heap.type;
+	return top_heap;
+}
+
+// funckia zisti, na akom poli v mape sa najnovsie vybrany blok z heapu nachadza
 struct Node where_am_i(struct Node top_heap, struct Node ***map) {
 
-	if (top_heap.type == 'D') {
-		top_heap.z += 1;
-		map[top_heap.x][top_heap.y][top_heap.z].prev_x = top_heap.x;
-		map[top_heap.x][top_heap.y][top_heap.z].prev_y = top_heap.y;
-		map[top_heap.x][top_heap.y][top_heap.z].prev_z = top_heap.z - 1;
-		map[top_heap.x][top_heap.y][top_heap.z].price = top_heap.price;
-		map[top_heap.x][top_heap.y][top_heap.z].x = top_heap.x;
-		map[top_heap.x][top_heap.y][top_heap.z].y = top_heap.y;
-		map[top_heap.x][top_heap.y][top_heap.z].z = top_heap.z;
-		map[top_heap.x][top_heap.y][top_heap.z].type = top_heap.type;
-		return top_heap;
+	if (top_heap.type == 'D' && (top_heap.z == 0 || top_heap.z == 2)) {
+		return change_dimension(map, top_heap, 1);
+		
 	}
-	if (top_heap.type == 'G') {
-		top_heap.z += 2;
-		map[top_heap.x][top_heap.y][top_heap.z].prev_x = top_heap.x;
-		map[top_heap.x][top_heap.y][top_heap.z].prev_y = top_heap.y;
-		map[top_heap.x][top_heap.y][top_heap.z].prev_z = top_heap.z - 2;
-		map[top_heap.x][top_heap.y][top_heap.z].price = top_heap.price;
-		map[top_heap.x][top_heap.y][top_heap.z].x = top_heap.x;
-		map[top_heap.x][top_heap.y][top_heap.z].y = top_heap.y;
-		map[top_heap.x][top_heap.y][top_heap.z].z = top_heap.z;
-		map[top_heap.x][top_heap.y][top_heap.z].type = top_heap.type;
-		return top_heap;
+
+	if (top_heap.type == 'G' && (top_heap.z == 0 || top_heap.z == 1 || top_heap.z == 5 || top_heap.z == 13)) {
+		return change_dimension(map, top_heap, 2);
 	}
+
 	if (top_heap.type == 'P' && top_heap.z % 2) {
-		top_heap.z += 4;
-		if (top_heap.z < 4)
-			top_heap.z += 4;
-		if (top_heap.z < 8)
-			top_heap.z += 8;
-		if (top_heap.z >= 13)
-			return top_heap;
+		if (top_heap.z < 4 || top_heap.z == 9 || top_heap.z == 11 || top_heap.z == 25 || top_heap.z == 27) {
+		// 	if (!(top_heap.z && 4) {
+			printf("Mam P v dimenzii %d\n", top_heap.z);
+			return change_dimension(map, top_heap, 4);
+		}
+	}
+
+	if (top_heap.type == 'O' && top_heap.z % 2) {
+		if (top_heap.z < 8 || top_heap.z == 17 || top_heap.z == 19 || top_heap.z == 21 || top_heap.z == 23) {
+			printf("Mam O v dimenzii %d\n", top_heap.z);
+			return change_dimension(map, top_heap, 8);
+		}
+	}
+
+	if (top_heap.type == 'Q' && top_heap.z % 2) {
+		if (top_heap.z < 16) {
+			printf("Mam Q v dimenzii %d\n", top_heap.z);
+			return change_dimension(map, top_heap, 16);
+		}
 	}
 	return top_heap;
 }
@@ -251,15 +278,17 @@ int dijkstra(char **original, struct Node ***map, int m, int n, int princess) {
 	struct Node top_heap;
 	int max_x = m;
 	int max_y = n;
+	int dimension = 2;
 
 	while (!0) {
 		top_heap = delete_heap();
+		//printf("Vybral som z heapu %d %d %d\n", top_heap.x, top_heap.y, top_heap.z);
 
 
 		insert_to_map(top_heap, map);
 		top_heap = where_am_i(top_heap, map);
 		if (top_heap.type >= '0' && top_heap.type <= '9')
-			if (top_heap.z >= 2)
+			if (top_heap.z == 2 || top_heap.z == 3 || top_heap.z == 7 || top_heap.z == 15)
 				teleport(original, map, top_heap, m, n);
 		
 		short x = top_heap.x;
@@ -267,59 +296,75 @@ int dijkstra(char **original, struct Node ***map, int m, int n, int princess) {
 		short z = top_heap.z;
 
 // tu to vypni ked chces koniec
-		if (top_heap.type == 'D') {
-			top_heap.z += 1; 
-			//print_heap();
-			cesta(top_heap, map);
-			return top_heap.price;
+		if (top_heap.type == 'P' || top_heap.type == 'O' || top_heap.type == 'Q') {
+			printf("\nAktualna: %d", top_heap.z);
+			for (int i = princess + 1; i > 0; i--)
+				dimension *= 2;
+			dimension -= 3;
+			printf("Minimalna: %d", dimension);
+			if (top_heap.z >= dimension) {
+				//top_heap.z += 1; 
+				//print_heap();
+				cesta(top_heap, map);
+				return top_heap.price;
+			}
+			else dimension = 2;
 		}
 
 		if (y - 1 >= 0 && original[x][y-1] != 'N') {
-			if (map[x][y - 1][z].price > top_heap.price) {
+			if (map[x][y - 1][z].price - 1 > top_heap.price) {
 				make_block(original, map, top_heap, x, y - 1, z);
+				//printf("Pridal som do heapu %d %d %d\n", map[x][y - 1][z].x, map[x][y - 1][z].y, map[x][y - 1][z].z);
 				insert_heap(map[x][y - 1][z]);
 				}
 			}
 		
 		if (x + 1 < max_x && original[x+1][y] != 'N') {
-			if (map[x + 1][y][z].price > top_heap.price) {
+			if (map[x + 1][y][z].price - 1 > top_heap.price) {
 				make_block(original, map, top_heap, x + 1, y, z);
+				//printf("Pridal som do heapu %d %d %d\n", map[x + 1][y][z].x, map[x + 1][y][z].y, map[x + 1][y][z].z);
 				insert_heap(map[x + 1][y][z]);
 				}
 			}
 			
 		if (y + 1 < max_y && original[x][y+1] != 'N') {
-			if (map[x][y + 1][z].price > top_heap.price) {
+			if (map[x][y + 1][z].price - 1 > top_heap.price) {
 				make_block(original, map, top_heap, x, y + 1, z);
+				//printf("Pridal som do heapu %d %d %d\n", map[x][y + 1][z].x, map[x][y + 1][z].y, map[x][y + 1][z].z);
 				insert_heap(map[x][y + 1][z]);
 				}
 			}
 
 		if (x - 1 >= 0 && original[x-1][y] != 'N') {
-			if (map[x - 1][y][z].price > top_heap.price) {
+			if (map[x - 1][y][z].price - 1 > top_heap.price) {
 				make_block(original, map, top_heap, x - 1, y, z);
+				//printf("Pridal som do heapu %d %d %d\n", map[x - 1][y][z].x, map[x - 1][y][z].y, map[x - 1][y][z].z);
 				insert_heap(map[x - 1][y][z]);
 			}
 		}
 	}
 }
 
+
 int find_teleports(char **mapa, int n, int m) {
 	int princess = 0;
+	char sign = 'O';
 	for (int i = 0; i < 10; i++)
 		for (int j = 0; j < 50; j++)
 			ports[i][j] = -1;
 	int num, index = 0;
 	for (int i = 0; i < m; i++) {
 		for (int j = 0; j < n; j++) {
-			if ((*(*(mapa + i) + j)) == 'P')
+			if ((mapa[i][j]) == 'P') {
+				mapa[i][j] = sign++;
 				princess++;
-			if ((*(*(mapa + i) + j)) >= '0' && (*(*(mapa + i) + j)) <= '9') {
-				num = mapa[i][j] - '0';
-				while (ports[num][index] != -1)
-					index += 2;
-				*(*(ports + num) + index) = i;
-				*(*(ports + num) + index+1) = j;
+			}
+		if ((*(*(mapa + i) + j)) >= '0' && (*(*(mapa + i) + j)) <= '9') {
+			num = mapa[i][j] - '0';
+			while (ports[num][index] != -1)
+				index += 2;
+			*(*(ports + num) + index) = i;
+			*(*(ports + num) + index + 1) = j;
 			}
 		}
 		index = 0;
@@ -347,11 +392,11 @@ void zachran_princezne(char **mapa, int n, int m, int t, int *dlzka_cesty) {
 	*/
 
 	struct Node ***arr;
-	arr = alloc_data(m, n, 16);
+	arr = alloc_data(m, n, 32);
 
 	for (int i = 0; i < m; i++)
 		for (int j = 0; j < n; j++)
-			for (int k = 0; k < 16; k++)
+			for (int k = 0; k < 32; k++)
 				arr[i][j][k].price = 600;
 
 	
@@ -372,19 +417,20 @@ void zachran_princezne(char **mapa, int n, int m, int t, int *dlzka_cesty) {
 int main() {
 	int j = 0;
 
-	char mapa[10][5] = { {'C','8','C','H','N'},
-					   {'H','G','C','H','0'},
-					   {'H','C','C','N','C'},
-					   {'N','C','N','N','C'},
-					   {'H','P','8','H','C'},
-					   {'C','N','4','0','N'},
-					   {'H','0','H','N','C'},
-					   {'C','N','C','C','C'},
-					   {'H','C','H','P','C'},
-					   {'4','H','C','4','D'} };
+	char mapa[10][10] = { {'C','N','C','C','C','N','C','C','C','P'},
+						 {'5','N','C','N','C','N','C','N','C','C'},
+						 {'P','N','C','N','C','N','C','N','C','C'},
+						 {'C','N','C','N','C','N','C','N','C','C'},
+						 {'C','N','C','N','C','N','C','N','C','N'},
+						 {'C','N','C','N','C','N','C','N','C','C'},
+						 {'C','N','C','N','C','N','C','N','C','C'},
+						 {'C','N','C','N','C','N','C','N','C','D'},
+						 {'C','N','C','N','C','N','C','N','C','C'},
+						 {'C','C','C','N','P','C','C','N','5','G'} };
 
 	int vyska = 10;
-	int sirka = 5;
+	int sirka = 10;
+
 
 	char **mapka;
 	mapka = (char**)malloc(vyska * sizeof(char*));
@@ -393,12 +439,12 @@ int main() {
 	}
 
 	for (int j = 0; j < vyska; ++j) {
-		for (int i = 0; i < vyska; ++i) {
+		for (int i = 0; i < sirka; ++i) {
 			mapka[j][i] = mapa[j][i];
 		}
 	}
 
-	zachran_princezne(mapka, 5, 10, 0, &j);
+	zachran_princezne(mapka, sirka, vyska, 0, &j);
 	system("pause");
 	return 0;
 }
@@ -406,4 +452,8 @@ int main() {
 /*
 trik: v portoch volam obzcajny insert do heapu a pridavam cenu.
 make blok - nespravna cena
+generator sa da zapnut len raz ty blbec, aj drak skantrit
+
+
+ak su 3 tak (2^pocet princezien + 2) - 3
 */
