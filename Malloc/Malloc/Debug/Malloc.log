@@ -1,0 +1,4 @@
+﻿  Source.c
+c:\users\maroš\source\repos\malloc\malloc\source.c(34): warning C4018: '<=': signed/unsigned mismatch
+c:\users\maroš\source\repos\malloc\malloc\source.c(57): warning C4018: '>': signed/unsigned mismatch
+  Malloc.vcxproj -> C:\Users\Maroš\source\repos\Malloc\Debug\Malloc.exe
