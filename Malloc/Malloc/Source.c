@@ -112,6 +112,7 @@ int main() {
 	char pole[100];
 	memory_init(pole, 100);
 
+	/* some testing */
 	char *p0 = memory_alloc(6);//
 	char *p1 = memory_alloc(7);//
 	char *p2 = memory_alloc(8);//
@@ -121,12 +122,7 @@ int main() {
 	vypis();
 	char *p6 = memory_alloc(12);//
 	vypis();
-//	printf("%d %d\n", memory_free(p4), (char *)p4 - (char *)pointer - 4);
-//	vypis();
-//	printf("%d %d\n", memory_free(p2), (char *)p2 - (char *)pointer - 4);
-//	vypis();
-//	printf("%d %d\n", memory_free(p1), (char *)p1 - (char *)pointer - 4);
-//	vypis();
+
 	printf("%d %d\n", memory_free(p6), (char *)p6 - (char *)pointer - 4);
 	printf("%d %d\n", memory_free(p5), (char *)p5 - (char *)pointer - 4);
 	printf("%d %d\n", memory_free(p3), (char *)p3 - (char *)pointer - 4);
@@ -138,116 +134,7 @@ int main() {
 	char *p11 = memory_alloc(8);//
 	vypis();
 	char *p12 = memory_alloc(8);//
-/*
-	char *p0 = memory_alloc(9);//
-	char *p1 = memory_alloc(16);//
-	char *p2 = memory_alloc(20);//
-	char *p3 = memory_alloc(8);//
-	char *p4 = memory_alloc(8);//
-	char *p5 = memory_alloc(12);
-	char *p6 = memory_alloc(19);//
-	char *p7 = memory_alloc(17);
-	char *p8 = memory_alloc(23);
-	char *p9 = memory_alloc(15);
-	char *p10 = memory_alloc(14);//
-	char *p11 = memory_alloc(18);//
-	char *p12 = memory_alloc(15);
-	char *p13 = memory_alloc(17);//
-	char *p14 = memory_alloc(22);
-	char *p15 = memory_alloc(22);//
-	char *p16 = memory_alloc(14);
-	char *p17 = memory_alloc(9);//
-	char *p18 = memory_alloc(22);
-	char *p19 = memory_alloc(12);
-	char *p20 = memory_alloc(20);//
-	char *p21 = memory_alloc(23);//
-	char *p22 = memory_alloc(11);//
-	char *p23 = memory_alloc(8);//
-	char *p24 = memory_alloc(18);
-	char *p25 = memory_alloc(13);
-	char *p26 = memory_alloc(13);//
-	char *p27 = memory_alloc(9);
-	char *p28 = memory_alloc(21);//
-	char *p29 = memory_alloc(8);
-	char *p30 = memory_alloc(17);
-	char *p31 = memory_alloc(19);//
-	char *p32 = memory_alloc(13);//
-	char *p33 = memory_alloc(10);//
-	char *p34 = memory_alloc(23);
-	char *p35 = memory_alloc(10);//
-	char *p36 = memory_alloc(23);
-	char *p37 = memory_alloc(11);//
-	char *p38 = memory_alloc(19);//
 
-	vypis();
-
-	printf("%d %d\n", memory_free(p20), (char *)p20 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p0), (char *)p0 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p28), (char *)p28 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p26), (char *)p26 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p11), (char *)p11 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p31), (char *)p31 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p15), (char *)p15 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p10), (char *)p10 - (char *)pointer - 4); 
-	printf("%d %d\n", memory_free(p22), (char *)p22 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p37), (char *)p37 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p17), (char *)p17 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p13), (char *)p13 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p33), (char *)p33 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p6), (char *)p6 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p4), (char *)p4 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p35), (char *)p35 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p21), (char *)p21 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p1), (char *)p1 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p3), (char *)p3 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p23), (char *)p23 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p32), (char *)p32 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p38), (char *)p38 - (char *)pointer - 4); 	
-	printf("%d %d\n", memory_free(p2), (char *)p2 - (char *)pointer - 4);
-	vypis();
-	
-	char *p39 = memory_alloc(13); 
-	char *p40 = memory_alloc(18); 
-	char *p41 = memory_alloc(11); 
-	char *p42 = memory_alloc(20); 
-	char *p43 = memory_alloc(18); 
-	char *p44 = memory_alloc(10); 
-	char *p45 = memory_alloc(15); 
-	char *p46 = memory_alloc(13); 
-	char *p47 = memory_alloc(8); 
-	char *p48 = memory_alloc(8); 
-	char *p49 = memory_alloc(11); 
-	char *p50 = memory_alloc(22); 
-	char *p51 = memory_alloc(14); 
-	char *p52 = memory_alloc(16); 
-	char *p53 = memory_alloc(19); 
-	char *p54 = memory_alloc(18); 
-	char *p55 = memory_alloc(15); 
-	char *p56 = memory_alloc(18); 
-	char *p57 = memory_alloc(13); 
-	char *p58 = memory_alloc(18); 
-	char *p59 = memory_alloc(11); 
-	char *p60 = memory_alloc(11); 
-	char *p61 = memory_alloc(13); 
-	char *p62 = memory_alloc(23); 
-	char *p63 = memory_alloc(20); 
-	char *p64 = memory_alloc(10); 
-	char *p65 = memory_alloc(18); 
-	char *p66 = memory_alloc(22); 
-	char *p67 = memory_alloc(11); 
-	
-	vypis();
-	
-
-	printf("%d %d\n", memory_free(p46), (char *)p46 - (char *)pointer - 4);
-	printf("%d %d\n", memory_free(p29), (char *)p29 - (char *)pointer - 4);
-	printf("%d %d\n", memory_free(p56), (char *)p56 - (char *)pointer - 4);
-	printf("%d %d\n", memory_free(p30), (char *)p30 - (char *)pointer - 4);
-	printf("%d %d\n", memory_free(p25), (char *)p25 - (char *)pointer - 4);
-	printf("%d %d\n", memory_free(p40), (char *)p40 - (char *)pointer - 4);
-	
-	vypis();
-	*/
 	getchar();
 	return 0;
 }
